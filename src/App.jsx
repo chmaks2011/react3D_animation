@@ -7,7 +7,14 @@ function App() {
 
   return (
     <>
-      <h1>Hello, React3D</h1>
+      <h1>React3D Animation</h1>
+      <p>
+        <b>Керування:</b>
+        - Клавіша 1: idle
+        - Клавіша 2: walk
+        - Клавіша 3: jump
+        - мишка: орієнтація камери
+      </p>
       <ThreeScene />
     </>
   )

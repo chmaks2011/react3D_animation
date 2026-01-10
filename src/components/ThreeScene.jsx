@@ -1,5 +1,7 @@
 import Reaact from 'react';
 import { Canvas } from '@react-three/fiber';
+import * as THREE from 'three';
+import { OrbitControls } from '@react-three/drei';
 
 function Box() {
     return(
@@ -16,6 +18,11 @@ export default function ThreeScene() {
             <ambientLight />
             <pointLight posotion={[10, 10, 10]} />
             <Box />
+	        {/* Координатні осі */}
+	        <primitive object={new THREE.AxesHelper(2)} />
+	        {/* Сітка як орієнтир */}
+	        <primitive object={new THREE.GridHelper(10, 10)} />
+            < OrbitControls/>
         </Canvas>
     )
 
