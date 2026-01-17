@@ -2,7 +2,7 @@ import { useCharacterStore } from "../store/useCharacterStore.js";
 import { useEffect } from "react";
 
 
-export default function useKeyControls(){
+export default function useKeyControls() {
     const setAction = useCharacterStore((s) => s.setAction)
 
     useEffect(() => {
@@ -12,8 +12,7 @@ export default function useKeyControls(){
             if (event.key === "3") setAction('jump');
         };
 
-        window.addEventListener('keydown', onkeydown);
-        return () => window.removeEventListener
-        ('keydown', onKeyDown);
+        window.addEventListener('keydown', onKeyDown);
+        return () => window.removeEventListener('keydown', onKeyDown);
     }, [setAction]);
 }
