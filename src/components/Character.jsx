@@ -10,16 +10,19 @@ export default function Character() {
     const idleFBX = useFBX('/models/Idle.fbx');
     const walkFBX = useFBX('/models/Walking.fbx');
     const jumpFBX = useFBX('/models/Jumping.fbx');
+    const sitFBX = useFBX('/models/Sitting.fbx');
 
     idleFBX.animations[0].name = 'Idle';
     walkFBX.animations[0].name = 'Walk';
     jumpFBX.animations[0].name = 'Jump';
+    sitFBX.animations[0].name = 'sit';
 
     const { actions } = useAnimations(
-        [idleFBX.animations[0], walkFBX.animations[0], jumpFBX.animations[0]], group
+        [idleFBX.animations[0], walkFBX.animations[0], jumpFBX.animations[0], sitFBX.animations[0]], group
     );
 
     const currentAction = useCharacterStore((s) => s.currentAction);
+    const pos = useCharacterStore((s) => s.position);
 
     useEffect(() => {
         Object.values(actions).forEach((action) => action.stop());
@@ -29,10 +32,17 @@ export default function Character() {
         }
     }, [currentAction, actions]);
 
+    useFrame(() => {
+        if (!group.current) return;
+
+        if (currentAction === 'Walk') {
+            group.current.position.z = -0.5;
+        }
+    });
+
     return(
-        <group ref={group} position={[0, 0, 0]} scale={0.01}>
+        <group ref={group} position={pos} scale={0.01}>
             <primitive  object={character} />
         </group>
     )
 };
-
