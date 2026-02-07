@@ -9,6 +9,10 @@ export const useCharacterStore = create((set) => ({
     setSpeed: (value) => set(() => ({ speed: value })),
 
     position: [0, 0, 0], 
-    setPosition: (pos) => set(() => ({
-    position: pos })),
+    setPosition: (pos) => set((state) => ({
+        position: typeof pos === 'function' ? pos(state.position) : pos
+    })),
+
+    isJumping: false,
+    setIsJumping: (value) => set(() => ({ isJumping: value })),
 }));

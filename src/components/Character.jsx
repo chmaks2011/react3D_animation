@@ -1,6 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import { useCharacterStore } from '../store/useCharacterStore';
 import { useFBX, useAnimations } from '@react-three/drei';
+import { useFrame } from '@react-three/fiber';
 
 export default function Character() {
     const group = useRef();
@@ -32,16 +33,21 @@ export default function Character() {
         }
     }, [currentAction, actions]);
 
-    useFrame(() => {
-        if (!group.current) return;
+    // useFrame(() => {
+    //     if (!group.current) return;
 
-        if (currentAction === 'Walk') {
-            group.current.position.z = -0.5;
-        }
-    });
+    //     if (currentAction === 'Walk') {
+    //         group.current.position.z = -0.5;
+    //     }
+    //     group.current.position.x = pos[0];
+    //     group.current.position.y = pos[1];
+    //     group.current.position.z = pos[2];
+    // });
 
     return(
-        <group ref={group} position={pos} scale={0.01}>
+        <group ref={group}
+         position={[pos[0], pos[1], pos[2]]} 
+         scale={0.01}>
             <primitive  object={character} />
         </group>
     )
