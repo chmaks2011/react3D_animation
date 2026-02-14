@@ -4,6 +4,8 @@ import { useRef } from "react";
 
 
 export default function useKeyControls() {
+    const setRotation = useCharacterStore((s) => s.setRotation)
+
     const setAction = useCharacterStore((s) => s.setAction);
     const setPosition = useCharacterStore((s) => s.setPosition);
 
@@ -28,35 +30,39 @@ export default function useKeyControls() {
                 return;
             }
             //if (event.key === "4") setAction('sit');
-        
+
 
             setPosition((pos) => {
                 const [x, y, z] = pos;
                 if (event.key === "w") {
                     setAction('walk')
-                    return [x, y ,z - speed];
+                    setRotation(Math.PI);
+                    return [x, y, z - speed];
                 }
 
                 if (event.key === "s") {
                     setAction('walk')
-                    return [x, y ,z + speed];
+                    setRotation(0);
+                    return [x, y, z + speed];
                 }
 
                 if (event.key === "a") {
                     setAction('walk')
-                    return [x - speed, y ,z];
+                    setRotation(-Math.PI / 2);
+                    return [x - speed, y, z];
                 }
 
                 if (event.key === "d") {
                     setAction('walk')
-                    return [x + speed, y ,z];
+                    setRotation(Math.PI / 2);
+                    return [x + speed, y, z];
                 }
                 return pos;
             })
         };
 
-        function onKeyUp (event) {
-            if (keysPressed.current.delete(event.key))
+        function onKeyUp(event) {
+            keysPressed.current.delete(event.key);
             if (["w", "a", "s", "d"].includes(event.key)) {
                 if (!isJumping)
                     setAction('idle');
@@ -67,7 +73,7 @@ export default function useKeyControls() {
 
 
         window.addEventListener('keydown', onKeyDown);
-        window.addEventListener('keydoup', onKeyUp);
+        window.addEventListener('keyup', onKeyUp);
 
         return () => {
             window.removeEventListener('keydown', onKeyDown);

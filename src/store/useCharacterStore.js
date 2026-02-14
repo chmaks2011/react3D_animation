@@ -1,3 +1,4 @@
+import { rotate } from 'three/tsl';
 import { create } from 'zustand';
 
 export const useCharacterStore = create((set) => ({
@@ -12,6 +13,9 @@ export const useCharacterStore = create((set) => ({
     setPosition: (pos) => set((state) => ({
         position: typeof pos === 'function' ? pos(state.position) : pos
     })),
+
+    rotation: Math.PI, 
+    setRotation: (value) => set({ rotation: value }),
 
     isJumping: false,
     setIsJumping: (value) => set(() => ({ isJumping: value })),

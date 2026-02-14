@@ -2,6 +2,7 @@ import React, { useRef, useEffect } from 'react';
 import { useCharacterStore } from '../store/useCharacterStore';
 import { useFBX, useAnimations } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
+import { rotate } from 'three/tsl';
 
 export default function Character() {
     const group = useRef();
@@ -44,9 +45,13 @@ export default function Character() {
     //     group.current.position.z = pos[2];
     // });
 
+    const rotation = useCharacterStore((s) => s.rotation);
+
     return(
         <group ref={group}
          position={[pos[0], pos[1], pos[2]]} 
+        //  rotation={[0, Math.PI, 0]}
+         rotation={[0, rotation, 0]}
          scale={0.01}>
             <primitive  object={character} />
         </group>
